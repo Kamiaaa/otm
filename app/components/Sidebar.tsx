@@ -30,7 +30,8 @@ export default function Sidebar({ role }: { role: UserRole }) {
 
   return (
     <aside className="w-64 shrink-0 border-r border-slate-200 bg-white min-h-screen hidden md:block">
-      <div className="h-24 flex items-center px-6 border-b border-slate-200">
+      <div className="h-16 flex items-center px-6 border-b border-slate-200">
+
         <div className="relative h-10 w-32 sm:h-12 sm:w-36 lg:h-14 lg:w-44 mx-auto">
           <Image
             src="/globe.svg"
@@ -53,8 +54,8 @@ export default function Sidebar({ role }: { role: UserRole }) {
               key={link.href}
               href={link.href}
               className={`block rounded-lg px-3 py-2 text-sm font-medium transition-colors ${active
-                ? "bg-blue-600 text-white"
-                : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
+                  ? "bg-blue-600 text-white"
+                  : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
                 }`}
             >
               {link.label}

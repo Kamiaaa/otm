@@ -40,7 +40,7 @@ export default function Topbar({ user }: { user: SessionUser }) {
   }
 
   return (
-    <header className="h-24 border-b border-slate-200 bg-white flex items-center justify-between px-4 md:px-6">
+    <header className="h-16 border-b border-slate-200 bg-white flex items-center justify-between px-4 md:px-6 py-4 md:py-6">
       <div className="md:hidden font-semibold text-slate-900">🚗 Car Duty</div>
       <div className="ml-auto flex items-center gap-4">
         <div className="text-right hidden sm:block">
