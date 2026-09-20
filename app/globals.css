@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+:root {
+  --color-primary: #1e3a8a;
+}
+
+html,
+body {
+  height: 100%;
+}
+.btn-primary {
+  background-color: #12181b;
+  color: #f6f4ee;
+  border-radius: 0.5rem;
+  padding: 0.6rem 1.1rem;
+  font-weight: 500;
+  transition: background-color 150ms ease;
+}
+.btn-primary:hover {
+  background-color: #2a3438;
+}
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: #12181b;
+  border: 1px solid #12181b;
+  border-radius: 0.5rem;
+  padding: 0.55rem 1.05rem;
+  font-weight: 500;
+  transition: background-color 150ms ease;
+}
+.btn-secondary:hover {
+  background-color: #12181b0d;
+}
+.input {
+  border: 1px solid #d8d2c0;
+  border-radius: 0.5rem;
+  padding: 0.55rem 2rem;
+  background: white;
+  width: 100%;
+}
+.input:focus {
+  outline: 2px solid #ae8a1f;
+  outline-offset: 1px;
+}
