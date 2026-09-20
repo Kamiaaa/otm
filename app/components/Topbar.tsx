@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import type { SessionUser } from "@/types";
 
@@ -23,6 +24,12 @@ export default function Topbar({ user }: { user: SessionUser }) {
         <div className="h-9 w-9 rounded-full bg-blue-600 text-white flex items-center justify-center text-sm font-semibold">
           {user.name.charAt(0).toUpperCase()}
         </div>
+        <Link
+          href="/dashboard/change-password"
+          className="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors"
+        >
+          Change password
+        </Link>
         <button
           onClick={handleLogout}
           className="text-sm font-medium text-slate-600 hover:text-red-600 transition-colors"
