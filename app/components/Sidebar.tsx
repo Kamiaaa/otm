@@ -30,7 +30,6 @@ export default function Sidebar({ role }: { role: UserRole }) {
 
   return (
     <aside className="w-64 shrink-0 border-r border-slate-200 bg-white min-h-screen hidden md:block">
-      // Sidebar.tsx — change h-16 to h-24
       <div className="h-24 flex items-center px-6 border-b border-slate-200">
         <div className="relative h-10 w-32 sm:h-12 sm:w-36 lg:h-14 lg:w-44 mx-auto">
           <Image
