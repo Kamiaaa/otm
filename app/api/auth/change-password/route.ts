@@ -1,43 +1,39 @@
-import { NextRequest } from "next/server";
-import bcrypt from "bcryptjs";
+import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/lib/db";
 import User from "@/models/User";
-import { getSession } from "@/lib/auth";
-import { jsonError, jsonOk } from "@/lib/utils";
+import { hashPassword, verifyPassword } from "@/lib/auth";
+import { requireUser, isResponse, jsonError } from "@/lib/apiHelpers";
 
-// PATCH { currentPassword, newPassword } -> changes the logged-in user's own password
-export async function PATCH(req: NextRequest) {
-  const session = await getSession();
-  if (!session) return jsonError("Unauthorized", 401);
+export async function POST(req: NextRequest) {
+  const session = await requireUser();
+  if (isResponse(session)) return session;
 
   try {
     const { currentPassword, newPassword } = await req.json();
+
     if (!currentPassword || !newPassword) {
-      return jsonError("Current password and new password are required.");
+      return jsonError("Current password and new password are required");
     }
-    if (newPassword.length < 6) {
-      return jsonError("New password must be at least 6 characters.");
+    if (String(newPassword).length < 6) {
+      return jsonError("New password must be at least 6 characters");
     }
-    if (newPassword === currentPassword) {
-      return jsonError("New password must be different from your current password.");
+    if (currentPassword === newPassword) {
+      return jsonError("New password must be different from your current password");
     }
 
     await connectDB();
+    const user = await User.findById(session.id);
+    if (!user || !user.active) return jsonError("Account not found", 404);
 
-    const user = await User.findById(session.userId).select("+password");
-    if (!user) return jsonError("User not found.", 404);
+    const valid = await verifyPassword(String(currentPassword), user.password);
+    if (!valid) return jsonError("Current password is incorrect", 400);
 
-    const matches = await bcrypt.compare(currentPassword, user.password);
-    if (!matches) {
-      return jsonError("Current password is incorrect.", 401);
-    }
-
-    user.password = await bcrypt.hash(newPassword, 10);
+    user.password = await hashPassword(String(newPassword));
     await user.save();
 
-    return jsonOk({ success: true });
+    return NextResponse.json({ ok: true });
   } catch (err) {
     console.error(err);
-    return jsonError("Something went wrong while changing your password.", 500);
+    return jsonError("Something went wrong while changing your password", 500);
   }
 }
