@@ -1,8 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function ChangePasswordForm() {
+  const router = useRouter();
   const [form, setForm] = useState({
     currentPassword: "",
     newPassword: "",
@@ -121,9 +123,19 @@ export default function ChangePasswordForm() {
         />
       </div>
 
-      <button type="submit" disabled={loading} className="btn-primary">
-        {loading ? "Updating..." : "Update password"}
-      </button>
+      <div className="flex items-center gap-3">
+        <button type="submit" disabled={loading} className="btn-primary">
+          {loading ? "Updating..." : "Update password"}
+        </button>
+        <button
+          type="button"
+          disabled={loading}
+          onClick={() => router.push("/dashboard")}
+          className="btn-secondary disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          Cancel
+        </button>
+      </div>
     </form>
   );
 }
